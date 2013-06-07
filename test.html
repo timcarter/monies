@@ -3,26 +3,21 @@
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Concert+One|Montserrat+Alternates:400,700|VT323|Comfortaa:400,300,700&subset=latin,cyrillic-ext,greek,vietnamese,latin-ext,greek-ext,cyrillic' rel='stylesheet' type='text/css' />
 		<style type="text/css">
+
+			body, a {
+				color:#ecf0f1; /* cloud */
+			}
+
 			body {
 				/* Concert One, Ubuntu Mono, Montserrat Alternates, VT323, Comfortaa */
 				font-family:'Concert One', sans-serif;
-				color:#ecf0f1; /* cloud */
+				margin:0;
+				padding:0;
+				overflow:hidden;
+			}
 
-				display: -webkit-box;
-				-webkit-box-pack: center;
-				-webkit-box-align: center;
-
-				display: -moz-box;
-				-moz-box-pack: center;
-				-moz-box-align: center;
-
-				display: -ms-box;
-				-ms-box-pack: center;
-				-ms-box-align: center;
-
-				display: box;
-				box-pack: center;
-				box-align: center;
+			a {
+				text-decoration:none;
 			}
 
 			.negative {
@@ -35,72 +30,144 @@
 				background-color:#27ae60; /* nephritis */
 			}
 
+			.neutral {
+				background-color:#2c3e50; /* midnight blue */
+			}
+
+			.list {
+				display:block;
+				background-color:#34495e; /* wet asphalt */
+				overflow-y:scroll;
+			}
+
+			.list li {
+				text-align:justify;
+				width:100%;
+				line-height:3.5em;
+				list-style-type:none;
+				border-bottom:1px solid #ecf0f1; /* cloud */
+				padding:0 .5em;
+				cursor:pointer;
+				font-size:2em;
+			}
+
+			.info {
+				display: -webkit-box;
+				-webkit-box-pack: center;
+				-webkit-box-align: center;
+				-webkit-box-orient: vertical;
+
+				display: -moz-box;
+				-moz-box-pack: center;
+				-moz-box-align: center;
+				-moz-box-orient: vertical;
+
+				display: -ms-box;
+				-ms-box-pack: center;
+				-ms-box-align: center;
+				-ms-box-orient: vertical;
+
+				display: box;
+				box-pack: center;
+				box-align: center;
+				box-orient: vertical;
+			}
+
+			.slide {
+				height:100%;
+				width:100%;
+				margin:0;
+				padding:0;
+				position:relative;
+			}
+
+			.main {
+				display:block;
+				width:100%;
+				max-height:100%;
+				cursor:pointer;
+			}
+
 			.symbol {
 				text-align:center;
-				font-size:35vw;
+				font-size:12em;
 			}
 
 			.quote {
 				text-align:center;
-				font-size:27vw;
+				font-size:7em;
 			}
 
 			.time {
-				position:fixed;
+				position:absolute;
 				right:1%;
-				top:0;
+				top:1%;
 			}
 
 			.delta {
 				margin:auto 0;
 				text-align:center;
-				font-size:15vw;
+				font-size:6em;
 			}
 
 			.name {
-				position:fixed;
+				position:absolute;
 				left:1%;
-				top:0;
+				top:1%;
 			}
 
 			.volume {
-				position:fixed;
-				top:0;
+				position:absolute;
+				top:1%;
+				left:0;
 				text-align:center;
 				width:100%;
 			}
 
 			.yearLow {
-				position:fixed;
-				bottom:0;
+				position:absolute;
+				bottom:1%;
 				left:1%;
 			}
 
 			.yearHigh {
-				position:fixed;
-				bottom:0;
+				position:absolute;
+				bottom:1%;
 				right:1%;
 			}
 
 			.spread {
-				position:fixed;
+				position:absolute;
 				width:100%;
-				bottom:0;
+				bottom:1%;
+				left:0;
 				text-align:center;
 			}
+
 		</style>
 	</head>
-	<body class="negative">
-		<div class="time">1:33:21 EDT</div>
-		<div class="name">Amazon.com Inc.</div>
-		<div class="main">
-			<div class="symbol">AMZN</div>
-			<div class="quote">$265000.70</div>
-			<div class="delta">-1.18 (-.44%)</div>
+	<body>
+		<div class="slide info neutral">
+			<div class="time">1:33:21 EDT</div>
+			<div class="name">Amazon.com Inc.</div>
+			<a href="http://finance.yahoo.com/q?s=AMZN" target="_blank" class="main">
+				<div class="symbol">AMZN</div>
+				<div class="quote">$265000.70</div>
+				<div class="delta">-1.18 (-.44%)</div>
+			</a>
+			<div class="volume">3,427,941 (below normal)</div>
+			<div class="yearLow">211.16 (06/05/2012)</div>
+			<div class="yearHigh">284.72 (01/25/2013)</div>
+			<div class="spread">$0.01</div>
 		</div>
-		<div class="volume">3,427,941 (below normal)</div>
-		<div class="yearLow">211.16 (06/05/2012)</div>
-		<div class="yearHigh">284.72 (01/25/2013)</div>
-		<div class="spread">$0.01</div>
+		<ul class="slide list">
+			<li class="negative">AMZN - $265.00 (-$1.18 / -.44%)</li>
+			<li class="positive">F - $15.56 (+$2.65 / +.45%)</li>
+			<li class="neutral">WM - $39.01 ($0.00 / 0%)</li>
+			<li class="positive">MT - $12.34 (+$.03 / +0.04%)</li>
+			<li class="positive">CLF - $19.92 (+$1.44 / +1.73%)</li>
+			<li class="negative">WAG - $49.90 (-$3.44 / -0.95%)</li>
+			<li class="neutral">KO - $51.15 (+$.45 / +1.28%)</li>
+		</ul>
 	</body>
 </html>
