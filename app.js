@@ -51,8 +51,8 @@ var express = require('express'),
 
 				// try to get the price
 				price = $('#yfs_l84_' + lower).html() || $('#yfs_l10_' + lower).html();
-				deltaPrice = $('#yfs_c63_' + lower).first().text() || $('#yfs_c10_' + lower).first().text();
-				deltaPercent = $('#yfs_p43_' + lower).first().html() || $('#yfs_p20_' + lower).first().html();
+				deltaPrice = $('#yfs_c63_' + lower).first().text() || $('#yfs_c10_' + lower).first().text() || '';
+				deltaPercent = $('#yfs_p43_' + lower).first().html() || $('#yfs_p20_' + lower).first().html() || '';
 				deltaDirection = $('#yfs_c63_' + lower + ' img').attr('alt') || $('#yfs_c10_' + lower + ' img').attr('alt') || '',
 				volume = $('#yfs_v53_' + lower).first().html() || 'N/A';
 				avgVolume = $('#table2 tr:nth-child(4) > td').first().html() || 0;
@@ -84,8 +84,33 @@ var express = require('express'),
 // all environments
 app.set('port', process.env.PORT || 3000);
 
-app.get('/', getStatic('test.html'));
+app.get('/test', getStatic('test.html'));
 
+app.get('/view/:symbols', function(req, res) {
+	var symbols = req.params.symbols.split(','),
+		symbolsLength = symbols.length,
+		data = [],
+		markup = '';
+
+	// TODO: consolidate with /quote/:symbols
+	symbols.forEach(function(elem, arr, idx) {
+		getStockInformation(elem, function(quote) {
+			data.push(quote);
+
+			if (data.length === symbolsLength) {
+				mu2.compileAndRender('view.tmpl', {quotes:JSON.stringify(data)}).on('data', function(chunk) {
+					markup += chunk;
+				}).on('end', function() {
+					var escapedMarkup = markup.replace(/LEFT_BRACE/g, '{').replace(/RIGHT_BRACE/g, '}');
+					res.setHeader('Content-Type', 'text/html');
+					res.setHeader('Content-Length', escapedMarkup.length);
+					res.end(escapedMarkup);
+				});
+			}
+		})
+	});
+});
+/*
 app.get('/view/:symbol', function(req, res) {
 	getStockInformation(req.params.symbol, function(quote) {
 		var markup = '', volume = +quote.volume, avgVolume = +quote.avgVolume;
@@ -110,7 +135,7 @@ app.get('/view/:symbol', function(req, res) {
 		});
 	})
 });
-
+*/
 app.get('/quote/:symbols', function(req, res) {
 	var symbols = req.params.symbols.split(','),
 		symbolsLength = symbols.length,
@@ -129,6 +154,11 @@ app.get('/quote/:symbols', function(req, res) {
 		});
 	});
 });
+
+app.get('/underscore.js', getStatic('underscore.js'));
+app.get('/backbone.js', getStatic('backbone.js'));
+app.get('/mustache.js', getStatic('mustache.js'));
+app.get('/monies.js', getStatic('monies.js'));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

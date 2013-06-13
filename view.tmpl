@@ -1,0 +1,194 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title>{{symbol}} - {{price}}</title>
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Concert+One|Montserrat+Alternates:400,700|VT323|Comfortaa:400,300,700&subset=latin,cyrillic-ext,greek,vietnamese,latin-ext,greek-ext,cyrillic' rel='stylesheet' type='text/css' />
+		<style type="text/css">
+
+			body, a {
+				color:#ecf0f1; /* cloud */
+			}
+
+			body {
+				/* Concert One, Ubuntu Mono, Montserrat Alternates, VT323, Comfortaa */
+				font-family:'Concert One', sans-serif;
+				margin:0;
+				padding:0;
+				overflow:hidden;
+			}
+
+			a {
+				text-decoration:none;
+			}
+
+			.list {
+				display:block;
+				background-color:#34495e; /* wet asphalt */
+				overflow-y:scroll;
+			}
+
+			.list li {
+				text-align:justify;
+				width:100%;
+				line-height:3.5em;
+				list-style-type:none;
+				border-bottom:1px solid #ecf0f1; /* cloud */
+				padding:0 .5em;
+				cursor:pointer;
+				font-size:2em;
+			}
+
+			.info {
+				background-color:#2c3e50; /* midnight blue */
+				display: -webkit-box;
+				-webkit-box-pack: center;
+				-webkit-box-align: center;
+				-webkit-box-orient: vertical;
+
+				display: -moz-box;
+				-moz-box-pack: center;
+				-moz-box-align: center;
+				-moz-box-orient: vertical;
+
+				display: -ms-box;
+				-ms-box-pack: center;
+				-ms-box-align: center;
+				-ms-box-orient: vertical;
+
+				display: box;
+				box-pack: center;
+				box-align: center;
+				box-orient: vertical;
+			}
+
+			.down {
+				/* background-color:#c0392b; /* pomegranate */
+				background-color:#e74c3c; /* alizarin */
+			}
+
+			.up {
+				/* background-color:#2ecc71; /* emerland */
+				background-color:#27ae60; /* nephritis */
+			}
+
+			.slide {
+				height:100%;
+				width:100%;
+				margin:0;
+				padding:0;
+				position:relative;
+			}
+
+			.main {
+				display:block;
+				width:100%;
+				max-height:100%;
+				cursor:pointer;
+			}
+
+			.symbol {
+				text-align:center;
+				font-size:12em;
+			}
+
+			.quote {
+				text-align:center;
+				font-size:7em;
+			}
+
+			.time {
+				position:absolute;
+				right:1%;
+				top:1%;
+			}
+
+			.delta {
+				margin:auto 0;
+				text-align:center;
+				font-size:6em;
+			}
+
+			.name {
+				position:absolute;
+				left:1%;
+				top:1%;
+			}
+
+			.volume {
+				position:absolute;
+				top:1%;
+				left:0;
+				text-align:center;
+				width:100%;
+			}
+
+			.yearLow {
+				position:absolute;
+				bottom:1%;
+				left:1%;
+			}
+
+			.yearHigh {
+				position:absolute;
+				bottom:1%;
+				right:1%;
+			}
+
+			.spread {
+				position:absolute;
+				width:100%;
+				bottom:1%;
+				left:0;
+				text-align:center;
+			}
+
+			.list .input {
+				background-color:#bdc3c7; /* silver */
+				cursor:text;
+			}
+
+			.current {
+				animation-name:'fade-out'
+			}
+
+			.hidden {
+				display:none;
+				position:absolute;
+				top:0;
+				left:0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="quoteScreen"></div>
+		<script id="screenTemplate" type="text/jst">
+			<div class="slide info LEFT_BRACELEFT_BRACEdeltaDirectionRIGHT_BRACERIGHT_BRACE">
+				<div class="time">LEFT_BRACELEFT_BRACEtimeRIGHT_BRACERIGHT_BRACE</div>
+				<div class="name">LEFT_BRACELEFT_BRACELEFT_BRACEfullNameRIGHT_BRACERIGHT_BRACERIGHT_BRACE</div>
+				<a href="http://finance.yahoo.com/q?s=LEFT_BRACELEFT_BRACEsymbolRIGHT_BRACERIGHT_BRACE" target="_blank" class="main">
+					<div class="symbol">LEFT_BRACELEFT_BRACEsymbolRIGHT_BRACERIGHT_BRACE</div>
+					<div class="quote">LEFT_BRACELEFT_BRACEpriceRIGHT_BRACERIGHT_BRACE</div>
+					<div class="delta">LEFT_BRACELEFT_BRACEdeltaPriceRIGHT_BRACERIGHT_BRACE LEFT_BRACELEFT_BRACEdeltaPercentRIGHT_BRACERIGHT_BRACE</div>
+				</a>
+				<div class="volume">LEFT_BRACELEFT_BRACEvolumeRIGHT_BRACERIGHT_BRACELEFT_BRACELEFT_BRACEvoluminalNormalcyRIGHT_BRACERIGHT_BRACE</div>
+				<div class="yearLow">LEFT_BRACELEFT_BRACEyearLowRIGHT_BRACERIGHT_BRACE</div>
+				<div class="yearHigh">LEFT_BRACELEFT_BRACEyearHighRIGHT_BRACERIGHT_BRACE</div>
+				<div class="spread">LEFT_BRACELEFT_BRACEspreadRIGHT_BRACERIGHT_BRACE</div>
+			</div>
+		</script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="/underscore.js"></script>
+		<script src="/backbone.js"></script>
+		<script src="/mustache.js"></script>
+		<script src="/monies.js"></script>
+		<script>
+			$(function() {
+				Quotes = new $.Monies.QuotesList;
+					QuoteScreenView = null;
+
+				Quotes.add({{{quotes}}});
+				(QuoteScreenView = new $.Monies.QuoteScreen({collection:Quotes})).render();
+			})
+		</script>
+	</body>
+</html>
